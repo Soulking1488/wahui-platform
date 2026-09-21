@@ -59,7 +59,7 @@ group :development do
   gem "web-console"
 end
 
-gem "json", "~> 2.6"
+gem "json", "~> 3.0"
 
 gem "tailwindcss-rails", "~> 4.6"
 
