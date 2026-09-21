@@ -1,0 +1,118 @@
+<% content_for :title, "Rounds | Wahui" %>
+
+<div class="min-h-screen w-full bg-slate-950 text-slate-100">
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <%= link_to "WAHUI", root_path, class: "text-xl font-black tracking-wider text-emerald-400" %>
+      <nav class="flex items-center gap-4">
+        <%= link_to "Boards", boards_path, class: "text-sm font-medium text-slate-400 transition-colors hover:text-white" %>
+        <%= link_to "How to Play", how_to_play_path, class: "text-sm font-medium text-slate-400 transition-colors hover:text-white" %>
+        <%= link_to "Log In", new_user_session_path, class: "text-sm font-medium text-slate-300 transition-colors hover:text-white" %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-6 py-14 sm:py-20">
+    <% if @preview_mode %>
+      <div class="mb-10 rounded-xl border border-amber-900/60 bg-amber-950/20 px-5 py-4 text-sm text-amber-100/80">
+        <span class="font-semibold text-amber-100">Preview mode:</span> round scheduling and settlement are under development. The examples below are not live betting rounds.
+      </div>
+    <% end %>
+
+    <div class="max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">Wahui schedule</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-white sm:text-5xl">Rounds, at a glance.</h1>
+      <p class="mt-4 text-base leading-7 text-slate-400">Follow upcoming round windows and review announced results. Betting controls will appear only when the round system is formally enabled.</p>
+    </div>
+
+    <section class="mt-14">
+      <div class="flex items-end justify-between border-b border-slate-800 pb-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-400">Next up</p>
+          <h2 class="mt-2 text-2xl font-bold text-white">Upcoming rounds</h2>
+        </div>
+        <span class="text-sm text-slate-500"><%= pluralize(@upcoming_rounds.size, "round") %></span>
+      </div>
+
+      <div class="mt-6 grid gap-5 lg:grid-cols-2">
+        <% @upcoming_rounds.each do |round| %>
+          <article class="relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70 p-6 transition-colors hover:border-emerald-500/40">
+            <div class="absolute inset-y-0 left-0 w-1 bg-emerald-500"></div>
+            <div class="flex items-start justify-between gap-5 pl-2">
+              <div>
+                <p class="font-mono text-xs font-semibold tracking-wider text-emerald-400">ROUND #<%= round[:number].to_s.rjust(3, "0") %></p>
+                <h3 class="mt-2 text-xl font-bold text-white"><%= round[:title] %></h3>
+              </div>
+              <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium capitalize text-emerald-400"><%= round[:status] %></span>
+            </div>
+
+            <dl class="mt-7 grid grid-cols-2 gap-4 border-t border-slate-800 pt-5 text-sm sm:grid-cols-3">
+              <div>
+                <dt class="text-xs uppercase tracking-wider text-slate-500">Opens</dt>
+                <dd class="mt-1 text-slate-200"><%= l(round[:opens_at], format: :short) %></dd>
+              </div>
+              <div>
+                <dt class="text-xs uppercase tracking-wider text-slate-500">Closes</dt>
+                <dd class="mt-1 text-slate-200"><%= l(round[:closes_at], format: :short) %></dd>
+              </div>
+              <div>
+                <dt class="text-xs uppercase tracking-wider text-slate-500">Boards</dt>
+                <dd class="mt-1 text-slate-200"><%= round[:board_count] %> available</dd>
+              </div>
+            </dl>
+
+            <div class="mt-5 flex items-center justify-between border-t border-slate-800 pt-4 text-xs text-slate-500">
+              <span>Announcement <%= l(round[:announces_at], format: :short) %></span>
+              <%= link_to "How to play", how_to_play_path, class: "font-medium text-emerald-400 hover:text-emerald-300" %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <div class="flex items-end justify-between border-b border-slate-800 pb-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Archive</p>
+          <h2 class="mt-2 text-2xl font-bold text-white">Recent results</h2>
+        </div>
+        <span class="text-sm text-slate-500"><%= pluralize(@results.size, "result") %></span>
+      </div>
+
+      <div class="mt-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-800">
+            <thead class="bg-slate-800/40">
+              <tr>
+                <th class="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">Round</th>
+                <th class="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">Winning board</th>
+                <th class="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">Announced</th>
+                <th class="px-6 py-4 text-right text-[11px] font-semibold uppercase tracking-wider text-slate-500">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80">
+              <% @results.each do |result| %>
+                <tr class="transition-colors hover:bg-slate-800/30">
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <p class="font-mono text-xs text-emerald-400">#<%= result[:number].to_s.rjust(3, "0") %></p>
+                    <p class="mt-1 text-sm font-medium text-white"><%= result[:title] %></p>
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <% if result[:board] %>
+                      <p class="font-mono text-xs text-slate-500">BOARD #<%= result[:board].id.to_s.rjust(2, "0") %></p>
+                      <p class="mt-1 text-sm font-bold text-white"><%= result[:board].name %></p>
+                    <% else %>
+                      <span class="text-sm text-slate-500">Pending</span>
+                    <% end %>
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-400"><%= l(result[:announced_at], format: :short) %></td>
+                  <td class="whitespace-nowrap px-6 py-4 text-right"><span class="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium capitalize text-slate-300"><%= result[:status] %></span></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

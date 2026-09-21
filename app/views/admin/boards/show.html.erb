@@ -1,0 +1,45 @@
+<div class="space-y-6">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="text-sm uppercase tracking-wider text-emerald-400">Board details</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-white"><%= @board.name %></h2>
+    </div>
+    <%= link_to "Edit board", edit_admin_board_path(@board), class: "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500" %>
+  </div>
+
+  <div class="rounded-xl border border-gray-800 bg-gray-900 p-6">
+    <dl class="grid gap-6 sm:grid-cols-2">
+      <div>
+        <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Status</dt>
+        <dd class="mt-2 text-sm text-white"><%= @board.active? ? "Active" : "Inactive" %></dd>
+      </div>
+      <div>
+        <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Created</dt>
+        <dd class="mt-2 text-sm text-white"><%= l(@board.created_at, format: :long) %></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="rounded-xl border border-gray-800 bg-gray-900">
+    <div class="flex items-center justify-between border-b border-gray-800 px-6 py-4">
+      <div>
+        <h3 class="text-base font-semibold text-white">Synonyms</h3>
+        <p class="mt-1 text-sm text-gray-500">Clues associated with this board.</p>
+      </div>
+      <%= link_to "Manage synonyms", admin_board_synonyms_path(@board), class: "rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-500" %>
+    </div>
+    <div class="px-6 py-5">
+      <% if @board.synonyms.any? %>
+        <div class="flex flex-wrap gap-2">
+          <% @board.synonyms.order(:word).each do |synonym| %>
+            <span class="rounded-full border border-gray-700 bg-gray-950 px-3 py-1.5 text-sm text-gray-300"><%= synonym.word %></span>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-500">No synonyms have been added.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "Back to boards", admin_boards_path, class: "text-sm text-gray-400 hover:text-white" %>
+</div>

@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_21_210000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_21_222500) do
+  create_table "bets", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.decimal "amount", precision: 12, scale: 2, null: false
+    t.bigint "board_id", null: false
+    t.datetime "cancelled_at"
+    t.datetime "created_at", null: false
+    t.datetime "placed_at", null: false
+    t.string "status", default: "placed", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "wahuiboard_id", null: false
+    t.index ["board_id"], name: "index_bets_on_board_id"
+    t.index ["status"], name: "index_bets_on_status"
+    t.index ["user_id"], name: "index_bets_on_user_id"
+    t.index ["wahuiboard_id", "board_id"], name: "index_bets_on_wahuiboard_id_and_board_id"
+    t.index ["wahuiboard_id"], name: "index_bets_on_wahuiboard_id"
+  end
+
   create_table "boards", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.boolean "active"
     t.datetime "created_at", null: false
@@ -19,11 +36,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_210000) do
   end
 
   create_table "synonyms", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.string "mapping"
     t.datetime "updated_at", null: false
     t.bigint "wahuiboard_id"
     t.string "word"
+    t.index ["board_id", "word"], name: "index_synonyms_on_board_id_and_word", unique: true
+    t.index ["board_id"], name: "index_synonyms_on_board_id"
     t.index ["wahuiboard_id"], name: "index_synonyms_on_wahuiboard_id"
   end
 
@@ -42,38 +62,58 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_210000) do
   end
 
   create_table "wahui_transactions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.decimal "amount", precision: 10
+    t.decimal "amount", precision: 12, scale: 2, null: false
+    t.decimal "balance_after", precision: 12, scale: 2, default: "0.0", null: false
+    t.decimal "balance_before", precision: 12, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.integer "reference_id"
-    t.string "transaction_type"
+    t.string "transaction_type", null: false
     t.datetime "updated_at", null: false
     t.bigint "wallet_id", null: false
+    t.index ["transaction_type"], name: "index_wahui_transactions_on_transaction_type"
     t.index ["wallet_id"], name: "index_wahui_transactions_on_wallet_id"
   end
 
   create_table "wahuiboards", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "announced_at"
     t.datetime "announcement_time"
     t.datetime "betting_closing_time"
     t.bigint "board_id", null: false
+    t.text "cancellation_reason"
+    t.datetime "cancelled_at"
+    t.datetime "closed_at"
     t.datetime "created_at", null: false
     t.text "description"
     t.decimal "house_bet_amount", precision: 12, scale: 2
     t.bigint "house_bet_board_id"
+    t.datetime "opens_at"
+    t.integer "public_number", null: false
+    t.datetime "published_at"
+    t.datetime "settled_at"
+    t.string "status", default: "draft", null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_wahuiboards_on_board_id"
     t.index ["house_bet_board_id"], name: "index_wahuiboards_on_house_bet_board_id"
+    t.index ["public_number"], name: "index_wahuiboards_on_public_number", unique: true
+    t.index ["status"], name: "index_wahuiboards_on_status"
   end
 
   create_table "wallets", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.decimal "balance", precision: 10
+    t.decimal "balance", precision: 12, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_wallets_on_user_id", unique: true
   end
 
+  add_foreign_key "bets", "boards"
+  add_foreign_key "bets", "users"
+  add_foreign_key "bets", "wahuiboards"
+  add_foreign_key "synonyms", "boards"
   add_foreign_key "synonyms", "wahuiboards"
   add_foreign_key "wahui_transactions", "wallets"
   add_foreign_key "wahuiboards", "boards"
   add_foreign_key "wahuiboards", "boards", column: "house_bet_board_id"
+  add_foreign_key "wallets", "users"
 end

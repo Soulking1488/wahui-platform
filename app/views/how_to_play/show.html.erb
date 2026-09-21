@@ -1,0 +1,134 @@
+<% content_for :title, "How to Play | Wahui" %>
+
+<div class="min-h-screen w-full bg-slate-950 text-slate-100">
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <%= link_to "WAHUI", root_path, class: "text-xl font-black tracking-wider text-emerald-400" %>
+      <nav class="flex items-center gap-4">
+        <%= link_to "Boards", boards_path, class: "text-sm font-medium text-slate-400 transition-colors hover:text-white" %>
+        <%= link_to "Log In", new_user_session_path, class: "text-sm font-medium text-slate-300 transition-colors hover:text-white" %>
+        <%= link_to "Get Started", new_user_registration_path, class: "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-500" %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-6 py-14 sm:py-20">
+    <div class="flex flex-col gap-6 border-b border-slate-800 pb-10 sm:flex-row sm:items-end sm:justify-between">
+      <div class="max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">Wahui guide</p>
+        <h1 class="mt-3 text-4xl font-black tracking-tight text-white sm:text-5xl">How to play</h1>
+        <p class="mt-4 text-base leading-7 text-slate-400">Learn the round, clue, board, and payout flow before you play.</p>
+      </div>
+      <div class="inline-flex rounded-lg border border-slate-700 bg-slate-900 p-1" role="group" aria-label="Language">
+        <button type="button" data-language="en" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">English</button>
+        <button type="button" data-language="ms" class="rounded-md px-4 py-2 text-sm font-semibold text-slate-400 hover:text-white">Bahasa Melayu</button>
+      </div>
+    </div>
+
+    <section data-language-panel="en" class="mt-10 space-y-10">
+      <div class="grid gap-5 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">01</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Read the pantun</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Each round presents four clue lines. Together they point toward one board answer.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">02</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Choose a board</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Players choose a board number from the boards available in that round.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">03</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Check the result</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">After betting closes, the House announces the winning board and the round is settled.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-white">Round timeline</h2>
+        <ol class="mt-6 grid gap-5 sm:grid-cols-4">
+          <li><strong class="block text-emerald-400">Draft</strong><span class="mt-1 block text-sm leading-6 text-slate-400">The House prepares the boards, clues, answer, House bet, and schedule.</span></li>
+          <li><strong class="block text-emerald-400">Open</strong><span class="mt-1 block text-sm leading-6 text-slate-400">The published clues are visible and eligible players may place bets.</span></li>
+          <li><strong class="block text-emerald-400">Closed</strong><span class="mt-1 block text-sm leading-6 text-slate-400">Betting stops at the closing time. Late bets are rejected.</span></li>
+          <li><strong class="block text-emerald-400">Settled</strong><span class="mt-1 block text-sm leading-6 text-slate-400">The winning board is announced and eligible payouts are calculated.</span></li>
+        </ol>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+          <h2 class="text-xl font-bold text-white">How clues work</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-400">The synonym dictionary helps connect words and ideas to a board. For example, KURA-KURA may be associated with words such as penyu, sisir, petir, and kalung. The four published pantun lines for a round are locked as part of that round.</p>
+          <%= link_to "Browse boards", boards_path, class: "mt-5 inline-block text-sm font-semibold text-emerald-400 hover:text-emerald-300" %>
+        </div>
+        <div class="rounded-2xl border border-amber-900/60 bg-amber-950/20 p-6">
+          <h2 class="text-xl font-bold text-amber-100">Payout model</h2>
+          <p class="mt-3 text-sm leading-6 text-amber-100/70">The planned MVP uses a proportional pool: players who choose the winning board share the losing player pool in proportion to their winning stake. More winning players means the pool is divided across more winning stake.</p>
+          <p class="mt-3 text-xs leading-5 text-amber-100/50">Real-money betting, deposits, withdrawals, and payouts are still under development and must not be treated as available until formally enabled.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-language-panel="ms" class="mt-10 hidden space-y-10">
+      <div class="grid gap-5 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">01</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Baca pantun</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Setiap pusingan mempunyai empat baris petunjuk. Kesemuanya merujuk kepada satu jawapan papan.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">02</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Pilih papan</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Pemain memilih nombor papan daripada senarai papan yang tersedia untuk pusingan tersebut.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+          <span class="font-mono text-sm text-emerald-400">03</span>
+          <h2 class="mt-4 text-lg font-bold text-white">Semak keputusan</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Selepas pertaruhan ditutup, pihak House mengumumkan papan yang menang dan pusingan diselesaikan.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-white">Jadual pusingan</h2>
+        <ol class="mt-6 grid gap-5 sm:grid-cols-4">
+          <li><strong class="block text-emerald-400">Draf</strong><span class="mt-1 block text-sm leading-6 text-slate-400">Pihak House menyediakan papan, petunjuk, jawapan, taruhan House, dan jadual.</span></li>
+          <li><strong class="block text-emerald-400">Dibuka</strong><span class="mt-1 block text-sm leading-6 text-slate-400">Petunjuk diterbitkan dan pemain yang layak boleh membuat pertaruhan.</span></li>
+          <li><strong class="block text-emerald-400">Ditutup</strong><span class="mt-1 block text-sm leading-6 text-slate-400">Pertaruhan berhenti pada masa tutup. Pertaruhan lewat akan ditolak.</span></li>
+          <li><strong class="block text-emerald-400">Diselesaikan</strong><span class="mt-1 block text-sm leading-6 text-slate-400">Papan yang menang diumumkan dan bayaran yang layak dikira.</span></li>
+        </ol>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+          <h2 class="text-xl font-bold text-white">Cara petunjuk berfungsi</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-400">Kamus sinonim membantu menghubungkan perkataan dan idea kepada sesuatu papan. Contohnya, KURA-KURA boleh dikaitkan dengan penyu, sisir, petir, dan kalung. Empat baris pantun yang diterbitkan untuk satu pusingan akan dikunci sebagai sebahagian daripada pusingan itu.</p>
+          <%= link_to "Lihat papan", boards_path, class: "mt-5 inline-block text-sm font-semibold text-emerald-400 hover:text-emerald-300" %>
+        </div>
+        <div class="rounded-2xl border border-amber-900/60 bg-amber-950/20 p-6">
+          <h2 class="text-xl font-bold text-amber-100">Model bayaran</h2>
+          <p class="mt-3 text-sm leading-6 text-amber-100/70">MVP yang dirancang menggunakan kumpulan berkadar: pemain yang memilih papan menang berkongsi kumpulan taruhan yang kalah mengikut jumlah taruhan mereka. Lebih ramai pemain yang menang bermakna kumpulan dibahagikan kepada lebih banyak taruhan yang menang.</p>
+          <p class="mt-3 text-xs leading-5 text-amber-100/50">Pertaruhan wang sebenar, deposit, pengeluaran, dan bayaran masih dalam pembangunan dan belum boleh dianggap tersedia.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  (() => {
+    const buttons = document.querySelectorAll("[data-language]");
+    const panels = document.querySelectorAll("[data-language-panel]");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const language = button.dataset.language;
+        panels.forEach((panel) => panel.classList.toggle("hidden", panel.dataset.languagePanel !== language));
+        buttons.forEach((item) => {
+          const selected = item.dataset.language === language;
+          item.classList.toggle("bg-emerald-600", selected);
+          item.classList.toggle("text-white", selected);
+          item.classList.toggle("text-slate-400", !selected);
+        });
+      });
+    });
+  })();
+</script>

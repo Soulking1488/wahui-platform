@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :bets, dependent: :restrict_with_error
+  has_one :wallet, dependent: :restrict_with_error
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

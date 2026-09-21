@@ -1,0 +1,41 @@
+<div class="space-y-6">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="text-sm uppercase tracking-wider text-emerald-400">Board #<%= @board.id %></p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-white"><%= @board.name %> synonyms</h2>
+      <p class="mt-1 text-sm text-gray-400">Manage the clue vocabulary associated with this board.</p>
+    </div>
+    <%= link_to "Add synonym", new_admin_board_synonym_path(@board), class: "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500" %>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-xl shadow-black/10">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-800">
+        <thead class="bg-gray-800/60">
+          <tr>
+            <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-500">Synonym</th>
+            <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-500">Mapping</th>
+            <th class="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-wider text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800/80">
+          <% @synonyms.each do |synonym| %>
+            <tr class="transition-colors hover:bg-gray-800/40">
+              <td class="px-6 py-3.5 text-sm font-medium text-white"><%= synonym.word %></td>
+              <td class="px-6 py-3.5 text-sm text-gray-400"><%= synonym.mapping.presence || "-" %></td>
+              <td class="whitespace-nowrap px-6 py-3.5 text-right text-sm">
+                <%= link_to "Edit", edit_admin_board_synonym_path(@board, synonym), class: "font-medium text-emerald-400 hover:text-emerald-300" %>
+                <%= button_to "Remove", admin_board_synonym_path(@board, synonym), method: :delete, class: "ml-4 inline text-gray-500 hover:text-red-400", form: { class: "inline" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% if @synonyms.empty? %>
+      <div class="px-6 py-12 text-center text-sm text-gray-500">No synonyms have been added to this board.</div>
+    <% end %>
+  </div>
+
+  <%= link_to "Back to board", admin_board_path(@board), class: "text-sm text-gray-400 hover:text-white" %>
+</div>

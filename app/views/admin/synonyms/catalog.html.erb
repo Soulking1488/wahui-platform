@@ -1,0 +1,39 @@
+<div class="space-y-6">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h2 class="text-2xl font-bold tracking-tight text-white">Synonyms</h2>
+      <p class="mt-1 text-sm text-gray-400">Choose a board to manage its clue vocabulary.</p>
+    </div>
+    <span class="text-sm text-gray-400"><%= pluralize(@boards.size, "board") %></span>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-gray-800 bg-gray-900 shadow-xl shadow-black/10">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-800">
+        <thead class="bg-gray-800/60">
+          <tr>
+            <th class="w-20 px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-500">No.</th>
+            <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-500">Board name</th>
+            <th class="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-500">Synonyms</th>
+            <th class="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-wider text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800/80">
+          <% @boards.each do |board| %>
+            <tr class="transition-colors hover:bg-gray-800/40">
+              <td class="whitespace-nowrap px-6 py-3.5 text-sm font-mono text-gray-500">#<%= board.id.to_s.rjust(2, "0") %></td>
+              <td class="whitespace-nowrap px-6 py-3.5 text-sm font-semibold text-white"><%= board.name %></td>
+              <td class="whitespace-nowrap px-6 py-3.5 text-sm text-gray-400"><%= pluralize(board.synonyms.size, "synonym") %></td>
+              <td class="whitespace-nowrap px-6 py-3.5 text-right text-sm">
+                <%= link_to "Manage", admin_board_synonyms_path(board), class: "font-medium text-emerald-400 hover:text-emerald-300" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% if @boards.empty? %>
+      <div class="px-6 py-12 text-center text-sm text-gray-500">No boards are available.</div>
+    <% end %>
+  </div>
+</div>

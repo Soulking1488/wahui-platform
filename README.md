@@ -149,3 +149,12 @@ This application is intended for a gambling product and must not be deployed for
 
 - [Game mechanics](docs/mechanics.md)
 - [Wahuiboard data model](docs/wahuiboards.md)
+- [Round management](docs/round-management.md)
+
+## Support and Licensing
+
+For support, licensing questions, or other project enquiries, contact [gooneymart@gmail.com](mailto:gooneymart@gmail.com).
+
+This project is licensed under the [Mozilla Public License 2.0](LICENSE).
+
+Support ongoing Wahui development through [GitHub Sponsors](https://github.com/sponsors/Soulking1488).
