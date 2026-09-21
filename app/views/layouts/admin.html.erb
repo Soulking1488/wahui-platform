@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wahui Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-950 text-gray-100 min-h-screen flex antialiased">
+    <!-- Modular Sidebar Partial -->
+    <%= render "admin/shared/sidebar" %>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <header class="h-16 border-b border-gray-800 flex items-center justify-between px-8 bg-gray-900/50 backdrop-blur">
+        <h1 class="text-lg font-semibold text-white tracking-wide">Platform Management</h1>
+        <div class="flex items-center gap-4">
+          <span class="text-xs text-emerald-400 font-mono bg-emerald-950/60 border border-emerald-800 px-3 py-1 rounded-full">System Normal</span>
+        </div>
+      </header>
+
+      <div class="p-8 flex-1">
+        <% if flash[:notice] %>
+          <div class="mb-6 p-4 bg-emerald-950/50 border border-emerald-800 text-emerald-200 text-sm rounded-xl">
+            <%= flash[:notice] %>
+          </div>
+        <% elsif flash[:alert] %>
+          <div class="mb-6 p-4 bg-red-950/50 border border-red-800 text-red-200 text-sm rounded-xl">
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

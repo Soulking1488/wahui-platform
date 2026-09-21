@@ -1,0 +1,27 @@
+<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+  <!-- Navigation Header -->
+  <header class="border-b border-slate-800/80 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-xl font-black tracking-wider text-emerald-400">WAHUI</span>
+        <span class="text-xs uppercase tracking-widest px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">Modular v1.0</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <%= link_to "Log In", new_user_session_path, class: "text-sm font-medium text-slate-300 hover:text-white transition-colors" %>
+        <%= link_to "Get Started", new_user_registration_path, class: "text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-lg shadow-emerald-900/20 transition-all" %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="flex-grow">
+    <%= render "hero" %>
+    <%= render "features" %>
+    <%= render "stats" %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-900/30 py-8 text-center text-xs text-slate-500">
+    <p>&copy; <%= Time.current.year %> Wahui Platform. Built with Ruby on Rails & Tailwind CSS.</p>
+  </footer>
+</div>
