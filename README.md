@@ -1,5 +1,9 @@
 # Wahui
 
+[![CI](https://github.com/Soulking1488/wahui-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Soulking1488/wahui-platform/actions/workflows/ci.yml)
+[![Ruby on Rails](https://img.shields.io/badge/Ruby%20on%20Rails-8.1.3.1-CC0000?logo=rubyonrails&logoColor=white)](https://rubyonrails.org/)
+[![License: MPL-2.0](https://img.shields.io/badge/License-MPL--2.0-brightgreen.svg)](LICENSE)
+
 Wahui is a Rails web portal for a digital version of the Wahui board game. Players use a set of pantun-style clues to choose a board for each game round. The House publishes rounds, controls the betting window, announces results, and manages the payout process.
 
 This repository is an early development version. Authentication, role-based dashboards, the board catalog, round data, and local seed data are available. Real-money deposits, withdrawals, betting, payout processing, and the complete House administration workflow are still under development.
