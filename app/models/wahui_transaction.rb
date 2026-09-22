@@ -1,5 +1,6 @@
 class WahuiTransaction < ApplicationRecord
   belongs_to :wallet
+  belongs_to :reference, polymorphic: true, optional: true
 
   validates :amount, numericality: { other_than: 0 }
   validates :transaction_type, inclusion: { in: Wallet::TRANSACTION_TYPES }

@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_many :bets, dependent: :restrict_with_error
   has_one :wallet, dependent: :restrict_with_error
+  has_many :payments, dependent: :restrict_with_error
+
+  after_create :create_player_wallet, if: :player?
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -30,5 +33,11 @@ class User < ApplicationRecord
 
   def can_review_transactions?
     admin? || risk_manager?
+  end
+
+  private
+
+  def create_player_wallet
+    create_wallet!(balance: 0)
   end
 end

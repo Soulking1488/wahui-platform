@@ -17,6 +17,7 @@ class Bet < ApplicationRecord
   validates :placed_at, presence: true
   validate :round_accepts_bets
   validate :board_is_active
+  validate :wallet_has_sufficient_balance, on: :create
 
   scope :active, -> { where(status: :placed) }
 
@@ -42,5 +43,15 @@ class Bet < ApplicationRecord
     return unless board
 
     errors.add(:board, "is not active") unless board.active?
+  end
+
+  def wallet_has_sufficient_balance
+    return unless user
+
+    if user.wallet.nil?
+      errors.add(:user, "does not have a wallet")
+    elsif amount.present? && user.wallet.balance.to_d < amount.to_d
+      errors.add(:amount, "exceeds wallet balance")
+    end
   end
 end

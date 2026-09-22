@@ -6,12 +6,12 @@ class Wallet < ApplicationRecord
 
 	validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
-	def credit!(amount, transaction_type:, reference_id: nil)
-		record_movement!(positive_amount(amount), transaction_type:, reference_id:)
+	def credit!(amount, transaction_type:, reference: nil, reference_id: nil)
+		record_movement!(positive_amount(amount), transaction_type:, reference:, reference_id:)
 	end
 
-	def debit!(amount, transaction_type:, reference_id: nil)
-		record_movement!(-positive_amount(amount), transaction_type:, reference_id:)
+	def debit!(amount, transaction_type:, reference: nil, reference_id: nil)
+		record_movement!(-positive_amount(amount), transaction_type:, reference:, reference_id:)
 	end
 
 	private
@@ -23,7 +23,7 @@ class Wallet < ApplicationRecord
 		value
 	end
 
-	def record_movement!(delta, transaction_type:, reference_id: nil)
+	def record_movement!(delta, transaction_type:, reference: nil, reference_id: nil)
 		unless TRANSACTION_TYPES.include?(transaction_type.to_s)
 			raise ArgumentError, "invalid transaction type"
 		end
@@ -37,7 +37,8 @@ class Wallet < ApplicationRecord
 			wahui_transactions.create!(
 				amount: delta,
 				transaction_type: transaction_type,
-				reference_id: reference_id,
+				reference: reference,
+				reference_id: reference&.id || reference_id,
 				balance_before: balance_before,
 				balance_after: balance_after
 			)

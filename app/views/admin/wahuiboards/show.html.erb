@@ -1,0 +1,54 @@
+<div class="max-w-3xl space-y-6">
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <p class="text-sm uppercase tracking-wider text-emerald-400">Round summary</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-white"><%= @wahuiboard.title %></h2>
+    </div>
+    <%= link_to "Edit round", edit_admin_wahuiboard_path(@wahuiboard), class: "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500" %>
+  </div>
+
+  <% if @wahuiboard.errors.any? %>
+    <div class="rounded-lg border border-red-800 bg-red-950/50 p-4 text-sm text-red-200">
+      <%= @wahuiboard.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="grid gap-4 rounded-xl border border-gray-800 bg-gray-900 p-6 sm:grid-cols-2">
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Public number</p>
+      <p class="mt-2 text-lg font-semibold text-white">#<%= @wahuiboard.public_number %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Status</p>
+      <p class="mt-2 text-lg font-semibold text-emerald-400"><%= @wahuiboard.status %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Winning board</p>
+      <p class="mt-2 text-lg font-semibold text-white"><%= @wahuiboard.board&.name || "Not assigned" %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">House bet</p>
+      <p class="mt-2 text-lg font-semibold text-white">RM <%= number_to_currency(@wahuiboard.house_bet_amount.to_f, unit: "", precision: 2) %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Opens at</p>
+      <p class="mt-2 text-sm text-white"><%= @wahuiboard.opens_at&.strftime("%d %b %Y %H:%M") || "—" %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Betting closes</p>
+      <p class="mt-2 text-sm text-white"><%= @wahuiboard.betting_closing_time&.strftime("%d %b %Y %H:%M") || "—" %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Announcement time</p>
+      <p class="mt-2 text-sm text-white"><%= @wahuiboard.announcement_time&.strftime("%d %b %Y %H:%M") || "—" %></p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-gray-500">Description</p>
+      <p class="mt-2 text-sm text-white"><%= @wahuiboard.description.presence || "No description provided." %></p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <%= link_to "Back to rounds", admin_wahuiboards_path, class: "text-sm text-gray-400 hover:text-white" %>
+  </div>
+</div>

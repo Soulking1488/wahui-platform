@@ -39,8 +39,27 @@ The reference catalog contains 37 board names from the game documentation. The m
 | `/users/sign_in` | Login |
 | `/dashboard` | Authenticated player dashboard |
 | `/admin` | Admin and House operator dashboard |
+| `/admin/payment_gateway` | Admin-only DOKU payment gateway settings |
+| `/webhooks/doku` | DOKU payment notification endpoint |
 
 The admin routes for boards, users, and transactions are declared but their full controllers and views are not complete yet.
+
+## Payment Gateway
+
+Wahui currently integrates with **DOKU** for hosted checkout payments. The integration supports checkout creation, HMAC-SHA256 request signing, idempotency keys, webhook signature verification, and one-time wallet settlement.
+
+Payment gateway credentials are configured by an administrator at `/admin/payment_gateway`. Credentials are encrypted in the database and are never displayed after saving. The active DOKU environment follows the Rails environment:
+
+- Development and test use the DOKU Sandbox API.
+- Production uses the DOKU Production API.
+
+Configure the DOKU webhook in the DOKU back office with a public HTTPS URL:
+
+```text
+https://your-domain.example/webhooks/doku
+```
+
+Production deployments should provide separate Active Record encryption keys through `ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY`, `ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY`, and `ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT`. Environment variables `DOKU_API_KEY`, `DOKU_CLIENT_ID`, and `DOKU_SECRET_KEY` remain available as a deployment-level fallback when admin settings are not enabled.
 
 ## Requirements
 
@@ -101,6 +120,9 @@ Change the development admin password immediately when using a shared environmen
 - `Synonym`: A clue associated with a game round
 - `Wallet`: Intended player balance container
 - `WahuiTransaction`: Intended record for wagers, payouts, deposits, and withdrawals
+- `Payment`: Provider-neutral payment checkout and lifecycle record
+- `PaymentEvent`: Idempotent record of provider webhook events
+- `PaymentProviderSetting`: Encrypted, environment-specific payment provider credentials
 
 The current authentication schema uses Devise's `encrypted_password` column. The older `password_digest` column remains for now and is not used by Devise.
 

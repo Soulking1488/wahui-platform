@@ -4,7 +4,6 @@
     <p class="text-sm text-gray-400 mt-1">Real-time statistics and metrics for the Wahui ecosystem.</p>
   </div>
 
-  <!-- Metric Cards Grid -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl shadow-lg">
       <p class="text-xs font-medium uppercase tracking-wider text-gray-400">Total Users</p>
@@ -19,6 +18,78 @@
     <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl shadow-lg">
       <p class="text-xs font-medium uppercase tracking-wider text-gray-400">Total Transactions</p>
       <p class="text-3xl font-black text-indigo-400 mt-2"><%= @total_transactions %></p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div class="rounded-xl border border-gray-800 bg-gray-900 p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-white">Upcoming rounds</h3>
+        <span class="rounded-full bg-amber-500/10 px-2 py-1 text-[10px] uppercase tracking-wider text-amber-300"><%= @upcoming_rounds.size %></span>
+      </div>
+
+      <div class="space-y-3">
+        <% if @upcoming_rounds.any? %>
+          <% @upcoming_rounds.each do |round| %>
+            <div class="rounded-lg border border-gray-800 bg-gray-950/50 p-3">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-white">#<%= round.public_number %> <%= round.title %></p>
+                <span class="text-[10px] uppercase tracking-wider text-emerald-300"><%= round.status %></span>
+              </div>
+              <p class="mt-1 text-xs text-gray-400"><%= round.opens_at&.strftime("%d %b %H:%M") || "TBD" %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-sm text-gray-500">No upcoming rounds.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-gray-800 bg-gray-900 p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-white">Ongoing rounds</h3>
+        <span class="rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-wider text-emerald-300"><%= @ongoing_rounds.size %></span>
+      </div>
+
+      <div class="space-y-3">
+        <% if @ongoing_rounds.any? %>
+          <% @ongoing_rounds.each do |round| %>
+            <div class="rounded-lg border border-gray-800 bg-gray-950/50 p-3">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-white">#<%= round.public_number %> <%= round.title %></p>
+                <span class="text-[10px] uppercase tracking-wider text-emerald-300"><%= round.bets.count %> bets</span>
+              </div>
+              <p class="mt-1 text-xs text-gray-400"><%= round.board&.name || "Board pending" %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-sm text-gray-500">No active betting rounds.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-gray-800 bg-gray-900 p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-white">Settlement due</h3>
+        <span class="rounded-full bg-indigo-500/10 px-2 py-1 text-[10px] uppercase tracking-wider text-indigo-300"><%= @settlement_due.size %></span>
+      </div>
+
+      <div class="space-y-3">
+        <% if @settlement_due.any? %>
+          <% @settlement_due.each do |summary| %>
+            <% round = summary[:round] %>
+            <div class="rounded-lg border border-gray-800 bg-gray-950/50 p-3">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-white">#<%= round.public_number %> <%= round.title %></p>
+                <span class="text-[10px] uppercase tracking-wider text-indigo-300"><%= round.status %></span>
+              </div>
+              <p class="mt-1 text-xs text-gray-400">RM <%= number_with_precision(summary[:settlement_amount], precision: 2, delimiter: ',') %> to pay winners</p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-sm text-gray-500">No settlement pending.</p>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,43 @@
+<div class="max-w-3xl space-y-6">
+  <div>
+    <p class="text-sm uppercase tracking-wider text-emerald-400">Integration settings</p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-white">Payment gateway</h2>
+    <p class="mt-2 text-sm text-gray-400">Configure the DOKU credentials for the current application environment.</p>
+  </div>
+
+  <div class="rounded-xl border border-amber-800/70 bg-amber-950/30 p-4 text-sm text-amber-200">
+    <p class="font-semibold">Environment: <%= @setting.app_environment %></p>
+    <p class="mt-1">DOKU endpoint: <%= @setting.doku_environment %>. Development and test use sandbox automatically. Production uses the production API automatically.</p>
+    <p class="mt-1">Stored credentials are encrypted and are never shown again after saving.</p>
+  </div>
+
+  <%= form_with model: @setting, url: admin_payment_gateway_path, method: :patch, class: "space-y-6 rounded-xl border border-gray-800 bg-gray-900 p-6" do |form| %>
+    <% if @setting.errors.any? %>
+      <div class="rounded-lg border border-red-800 bg-red-950/50 p-4 text-sm text-red-200">
+        <%= @setting.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :client_id, "DOKU Client ID", class: "block text-sm font-medium text-gray-300" %>
+      <%= form.password_field :client_id, autocomplete: "off", placeholder: @setting.persisted? ? "Leave blank to keep current value" : nil, class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
+    </div>
+
+    <div>
+      <%= form.label :api_key, "DOKU API Key", class: "block text-sm font-medium text-gray-300" %>
+      <%= form.password_field :api_key, autocomplete: "off", placeholder: @setting.persisted? ? "Leave blank to keep current value" : nil, class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
+    </div>
+
+    <div>
+      <%= form.label :secret_key, "DOKU Secret Key", class: "block text-sm font-medium text-gray-300" %>
+      <%= form.password_field :secret_key, autocomplete: "off", placeholder: @setting.persisted? ? "Leave blank to keep current value" : nil, class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
+    </div>
+
+    <label class="flex items-center gap-3 text-sm text-gray-300">
+      <%= form.check_box :enabled, class: "h-4 w-4 rounded border-gray-600 bg-gray-950 text-emerald-500 focus:ring-emerald-500" %>
+      Enable DOKU for this environment
+    </label>
+
+    <%= form.submit "Save gateway settings", class: "cursor-pointer rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500" %>
+  <% end %>
+</div>
